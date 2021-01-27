@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5995778884171906279}
   - component: {fileID: 5995778884171906278}
   - component: {fileID: 5995778884171906265}
-  - component: {fileID: 3902343044031499581}
   - component: {fileID: 1235351221616396558}
   - component: {fileID: 1081758738863108548}
   m_Layer: 0
@@ -98,20 +97,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3902343044031499581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5995778884171906264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38242443f3246449a3b4d2bded2c87d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 2122528661048175437, guid: f6c9173e4282fee40820e7b39a8268da, type: 3}
-  numObjectInPool: 0
 --- !u!114 &1235351221616396558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,8 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flyingSpeed: 4
-  miniLifeTime: 1
-  maxiLifeTime: 1
+  miniDistance: 1
+  maxDistance: 4
 --- !u!54 &1081758738863108548
 Rigidbody:
   m_ObjectHideFlags: 0

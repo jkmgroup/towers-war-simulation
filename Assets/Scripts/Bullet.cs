@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(ObjectEmitter))]
 public class Bullet : MonoBehaviour
 {
   [Tooltip("Flying speed")]
@@ -18,11 +17,9 @@ public class Bullet : MonoBehaviour
 
   private float curDistance = 0.0f;
   private float flyRange = 0.0f;
-  private ObjectEmitter objectEmitter;
-
+  
   void Start()
   {
-    objectEmitter = GetComponent<ObjectEmitter>();      
   }
 
   void Update()
@@ -30,13 +27,14 @@ public class Bullet : MonoBehaviour
     curDistance += Time.deltaTime * flyingSpeed;
     if (curDistance > flyRange)
     {
-      if (TowerCounte.Instance().CanAddNext)
+      if (GlobalClassManager.Instance().TowersCounte.CanAddNext)
       {
-        var tower = objectEmitter.CreateNewGameObject();
+
+        var tower = GlobalClassManager.Instance().TowersEmitter.CreateNewGameObject();
         tower.transform.position = transform.position;
-        TowerCounte.Instance().AddTower();
+        GlobalClassManager.Instance().TowersCounte.AddTower();
       }
-      objectEmitter.objectPool.ReturnGameObject(gameObject);
+      GlobalClassManager.Instance().ObjectsPool.ReturnGameObject(gameObject);
     }else
       transform.position += transform.forward * flyingSpeed * Time.deltaTime;
   }
@@ -51,9 +49,10 @@ public class Bullet : MonoBehaviour
     var tower = collision.collider.GetComponent<Tower>();
     if (tower)
     {
-      objectEmitter.objectPool.ReturnGameObject(gameObject);
-      objectEmitter.objectPool.ReturnGameObject(tower.gameObject);
-      TowerCounte.Instance().RemoveTower();
+      var globalClassManager = GlobalClassManager.Instance();
+      globalClassManager.ObjectsPool.ReturnGameObject(gameObject);
+      globalClassManager.ObjectsPool.ReturnGameObject(tower.gameObject);
+      globalClassManager.TowersCounte.RemoveTower();
     }
   }
 }

@@ -12,13 +12,6 @@ public class ObjectEmitter : MonoBehaviour
   [SerializeField]
   private int numObjectInPool = 0;
 
-  private ObjectPool objectPool_;
-  public ObjectPool objectPool
-  {
-    get { return objectPool_; }
-    set { objectPool_ = value; }
-  }
-
   [ExecuteInEditMode]
   private void OnValidate()
   {
@@ -29,21 +22,8 @@ public class ObjectEmitter : MonoBehaviour
     }
   }
 
-  private void Start()
-  {
-    if (!objectPool_)
-    {
-      objectPool_ = FindObjectOfType<ObjectPool>();
-      if (!objectPool_)
-      {
-        Debug.LogError("Can find ObjectPool !");
-        Debug.Break();
-      }
-    }
-  }
-
   public GameObject CreateNewGameObject()
   {
-    return objectPool_.GetGameObject(prefab, numObjectInPool);
+    return GlobalClassManager.Instance().ObjectsPool.GetGameObject(prefab, numObjectInPool);
   }
 }

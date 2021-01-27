@@ -4,16 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(ObjectPool))]
+[RequireComponent(typeof(ObjectEmitter))]
 public class Scene : MonoBehaviour
 {
-  [Tooltip("Max life time")]
+  [Tooltip("Towers lable counter")]
   [SerializeField]
-  private Text counterLable;
+  private Text counterLable = null;
 
   public enum State { addTowers, maxTowers };
   private State state = State.addTowers;
-
-  private ObjectPool objectPool;
 
   [ExecuteInEditMode]
   private void OnValidate()
@@ -27,14 +26,15 @@ public class Scene : MonoBehaviour
 
   void Start()
   {
-    objectPool = GetComponent<ObjectPool>();
-    TowerCounte.Instance().CounterLable = counterLable;
+    GlobalClassManager.Instance().TowersCounte.CounterLable = counterLable;
+    GlobalClassManager.Instance().ObjectsPool = GetComponent<ObjectPool>();
+    GlobalClassManager.Instance().TowersEmitter = GetComponent<ObjectEmitter>();
   }
 
   // Update is called once per frame
   void Update()
   {
-    if (state == State.addTowers && !TowerCounte.Instance().CanAddNext)
+    if (state == State.addTowers && !GlobalClassManager.Instance().TowersCounte.CanAddNext)
     {
       SetStateMaxTowers();
     }

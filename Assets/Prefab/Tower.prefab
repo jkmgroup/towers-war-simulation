@@ -130,3 +130,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 5995778884171906264, guid: 382e3665b3b51af4989a47ad9e6dc901, type: 3}
+  numObjectInPool: 100

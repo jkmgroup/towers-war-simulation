@@ -11,11 +11,6 @@ public class ObjectPool : MonoBehaviour
     var obj = Instantiate(prefabGameObject);
     obj.name = prefabGameObject.name;
     obj.transform.parent = transform;
-    var objectEmitter = obj.GetComponent<ObjectEmitter>();
-    if (objectEmitter)
-    {
-      objectEmitter.objectPool = this;
-    }
     return obj;
   }
   public GameObject GetGameObject(GameObject prefabGameObject, int numObjectInPool)

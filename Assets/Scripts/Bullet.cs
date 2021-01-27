@@ -8,27 +8,27 @@ public class Bullet : MonoBehaviour
   [SerializeField]
   private float flyingSpeed = 4.0f;
 
-  [Tooltip("Mini life time")]
+  [Tooltip("Mini distance")]
   [SerializeField]
-  private float miniLifeTime = 1.0f;
+  private float miniDistance = 1.0f;
 
-  [Tooltip("Max life time")]
+  [Tooltip("Max distance")]
   [SerializeField]
-  private float maxiLifeTime = 1.0f;
+  private float maxDistance = 4.0f;
 
-  private float timeToDestroy = 0.0f;
+  private float curDistance = 0.0f;
+  private float flyRange = 0.0f;
   private ObjectEmitter objectEmitter;
-    // Start is called before the first frame update
+
   void Start()
   {
     objectEmitter = GetComponent<ObjectEmitter>();      
   }
 
-  // Update is called once per frame
   void Update()
   {
-    timeToDestroy -= Time.deltaTime;
-    if (timeToDestroy<0)
+    curDistance += Time.deltaTime * flyingSpeed;
+    if (curDistance > flyRange)
     {
       if (TowerCounte.Instance().CanAddNext)
       {
@@ -43,7 +43,7 @@ public class Bullet : MonoBehaviour
 
   private void OnEnable()
   {
-    timeToDestroy = Random.Range(miniLifeTime, maxiLifeTime);
+    flyRange = Random.Range(miniDistance, maxDistance);
   }
 
   private void OnCollisionEnter(Collision collision)

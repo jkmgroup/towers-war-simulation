@@ -72,7 +72,6 @@ public class Tower : MonoBehaviour
     }
     else
       gameObject.GetComponent<Renderer>().material = colorWhenNotActive;
-
   }
 
   private void UpdateWaitState()

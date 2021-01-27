@@ -46,6 +46,7 @@ public class TowerCounte
   {
     set { counterLable = value; }
   }
+
   private void UpdateLable()
   {
     if (!counterLable)

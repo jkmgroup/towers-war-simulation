@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
   private Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
+
   private GameObject CreateGameObject(GameObject prefabGameObject)
   {
     var obj = Instantiate(prefabGameObject);
@@ -49,7 +50,7 @@ public class ObjectPool : MonoBehaviour
       obj.SetActive(false);
       objects.Enqueue(obj);
       i++;
-      yield return new WaitForSeconds(0.02f);
+      yield return new WaitForSeconds(0.5f);
     }
   }
 

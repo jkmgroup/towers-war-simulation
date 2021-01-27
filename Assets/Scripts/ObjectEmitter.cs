@@ -28,6 +28,7 @@ public class ObjectEmitter : MonoBehaviour
       Debug.Break();
     }
   }
+
   private void Start()
   {
     if (!objectPool_)
@@ -39,8 +40,8 @@ public class ObjectEmitter : MonoBehaviour
         Debug.Break();
       }
     }
-
   }
+
   public GameObject CreateNewGameObject()
   {
     return objectPool_.GetGameObject(prefab, numObjectInPool);

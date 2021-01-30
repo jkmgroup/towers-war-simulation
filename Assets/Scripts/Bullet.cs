@@ -7,13 +7,9 @@ public class Bullet : MonoBehaviour
   [SerializeField]
   private float flyingSpeed = 4.0f;
 
-  [Tooltip("Mini distance")]
+  [Tooltip("distance range")]
   [SerializeField]
-  private float miniDistance = 1.0f;
-
-  [Tooltip("Max distance")]
-  [SerializeField]
-  private float maxDistance = 4.0f;
+  private MinMax<float> distanceRange = new MinMax<float>(1.0f, 4.0f);
 
   private float curDistance = 0.0f;
   private float flyRange = 0.0f;
@@ -27,12 +23,10 @@ public class Bullet : MonoBehaviour
     curDistance += Time.deltaTime * flyingSpeed;
     if (curDistance > flyRange)
     {
-      if (GlobalClassManager.Instance().TowersCounte.CanAddNext)
+      var scene = GlobalClassManager.Instance().scene;
+      if (scene.SceneState == Scene.State.addTowers)
       {
-
-        var tower = GlobalClassManager.Instance().TowersEmitter.CreateNewGameObject();
-        tower.transform.position = transform.position;
-        GlobalClassManager.Instance().TowersCounte.AddTower();
+        scene.AddTower(transform.position);
       }
       GlobalClassManager.Instance().ObjectsPool.ReturnGameObject(gameObject);
     }else
@@ -41,7 +35,7 @@ public class Bullet : MonoBehaviour
 
   private void OnEnable()
   {
-    flyRange = Random.Range(miniDistance, maxDistance);
+    flyRange = Random.Range(distanceRange.min, distanceRange.max);
   }
 
   private void OnCollisionEnter(Collision collision)
@@ -51,8 +45,7 @@ public class Bullet : MonoBehaviour
     {
       var globalClassManager = GlobalClassManager.Instance();
       globalClassManager.ObjectsPool.ReturnGameObject(gameObject);
-      globalClassManager.ObjectsPool.ReturnGameObject(tower.gameObject);
-      globalClassManager.TowersCounte.RemoveTower();
+      globalClassManager.scene.RemoveTower(tower.gameObject);
     }
   }
 }

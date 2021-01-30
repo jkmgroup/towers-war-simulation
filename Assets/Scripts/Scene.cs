@@ -5,40 +5,32 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(ObjectPool))]
 [RequireComponent(typeof(ObjectEmitter))]
+[RequireComponent(typeof(TowersCounter))]
 public class Scene : MonoBehaviour
 {
-  [Tooltip("Towers lable counter")]
+
   [SerializeField]
-  private Text counterLable = null;
+  private int maxNumTowers = 100;
+
+  private TowersCounter towersCounter;
 
   public enum State { addTowers, maxTowers };
   private State state = State.addTowers;
-
-  [ExecuteInEditMode]
-  private void OnValidate()
+  public State SceneState
   {
-    if (!counterLable)
-    {
-      Debug.LogError("counterLable can be null!");
-      Debug.Break();
-    }
+    get => state;
   }
+  private ObjectEmitter towersEmitter = null;
+
 
   void Start()
   {
-    GlobalClassManager.Instance().TowersCounte.CounterLable = counterLable;
+    towersCounter = GetComponent<TowersCounter>();
     GlobalClassManager.Instance().ObjectsPool = GetComponent<ObjectPool>();
-    GlobalClassManager.Instance().TowersEmitter = GetComponent<ObjectEmitter>();
+    towersEmitter = GetComponent<ObjectEmitter>();
+    GlobalClassManager.Instance().scene = this;
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-    if (state == State.addTowers && !GlobalClassManager.Instance().TowersCounte.CanAddNext)
-    {
-      SetStateMaxTowers();
-    }
-  }
   private void SetStateMaxTowers()
   {
     state = State.maxTowers;
@@ -47,5 +39,36 @@ public class Scene : MonoBehaviour
     {
       tower.ChangeState(Tower.State.active);
     }
+  }
+
+  public void AddTower(Vector3 pos)
+  {
+    var tower = towersEmitter.CreateNewGameObject();
+    tower.transform.position = pos;
+    towersCounter.AddTower();
+  }
+  public void RemoveTower(GameObject tower)
+  {
+    if (!tower.activeSelf)
+      return;
+    GlobalClassManager.Instance().ObjectsPool.ReturnGameObject(tower);
+    towersCounter.RemoveTower();
+  }
+  private void OnEnable()
+  {
+    TowersCounter.towerNumChange += TowersNumChange;
+  }
+
+  private void OnDestroy()
+  {
+    TowersCounter.towerNumChange -= TowersNumChange;
+  }
+
+  private void TowersNumChange(int numTowers)
+  {
+    if (state == State.maxTowers)
+      return;
+    if (numTowers >= maxNumTowers)
+      SetStateMaxTowers();
   }
 }

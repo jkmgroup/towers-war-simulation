@@ -617,6 +617,7 @@ GameObject:
   - component: {fileID: 1882266094}
   - component: {fileID: 1882266096}
   - component: {fileID: 1882266095}
+  - component: {fileID: 1882266097}
   m_Layer: 5
   m_Name: CounterLable
   m_TagString: Untagged
@@ -685,6 +686,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882266093}
   m_CullTransparentMesh: 0
+--- !u!114 &1882266097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882266093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f6fd5d20d9cb9b40a597fefc7756b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1974969419
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,6 +710,7 @@ GameObject:
   - component: {fileID: 1974969420}
   - component: {fileID: 1974969422}
   - component: {fileID: 1974969423}
+  - component: {fileID: 1974969424}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -716,7 +730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e69e1d46b78114889ba919b20c8809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  counterLable: {fileID: 1882266095}
+  maxNumTowers: 100
 --- !u!4 &1974969421
 Transform:
   m_ObjectHideFlags: 0
@@ -758,3 +772,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 2122528661048175437, guid: f6c9173e4282fee40820e7b39a8268da, type: 3}
   numObjectInPool: 0
+--- !u!114 &1974969424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974969419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6debeca50368f6a45a025ab805774b00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numTowers: 1

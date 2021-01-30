@@ -24,13 +24,8 @@ public class Tower : MonoBehaviour
   [SerializeField]
   private float waitMaxTime = 6.0f;
 
-  [Tooltip("Rotation mini angle")]
   [SerializeField]
-  private float miniAngle = 15.0f;
-
-  [Tooltip("Rotation max angle")]
-  [SerializeField]
-  private float maxAngle = 45.0f;
+  private MinMax<float> rotationAngleRange = new MinMax<float>(15.0f, 45.0f);
 
   [Tooltip("color When tower is Active")]
   [SerializeField]
@@ -42,6 +37,7 @@ public class Tower : MonoBehaviour
 
   private float curTime = 0;
   private ObjectEmitter objectEmitter;
+
   private void Start()
   {
     objectEmitter = GetComponent<ObjectEmitter>();
@@ -92,7 +88,7 @@ public class Tower : MonoBehaviour
     curTime += Time.deltaTime;
     if (curTime >= timeToRotate)
     {
-      transform.Rotate(new Vector3(0, Random.Range(miniAngle, maxAngle)));
+      transform.Rotate(new Vector3(0, Random.Range(rotationAngleRange.min, rotationAngleRange.max)));
       curTime = 0.0f;
       SendBullet();
     }
@@ -104,6 +100,9 @@ public class Tower : MonoBehaviour
     obj.transform.position = transform.position + transform.forward;
     obj.transform.rotation = transform.rotation;
     numBullet--;
+  }
+  private void OnEnable()
+  {
   }
   private void OnDisable()
   {
